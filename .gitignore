@@ -1,0 +1,15 @@
+# Secret keys - never upload these
+.env
+
+# Node modules - too large to upload
+node_modules/
+
+# Mac system files
+.DS_Store
+
+# Log files
+*.log
+
+# Temp files
+tmp/
+temp/

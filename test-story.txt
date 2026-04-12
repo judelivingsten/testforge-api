@@ -1,0 +1,11 @@
+User Story:
+As a bank customer I want to transfer money between my accounts 
+so that I can manage my finances easily.
+
+Acceptance Criteria:
+- User can select source and destination account
+- Minimum transfer amount is 
+- Maximum transfer amount is ,000 per day
+- User receives confirmation after successful transfer
+- Balance cannot go below -zsh
+- User receives email notification after transfer
