@@ -11,8 +11,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static('public'));
 
-app.get('/', (req, res) => {
+app.get('/health', (req, res) => {
   res.json({ message: 'TestForge API is running' });
 });
 
