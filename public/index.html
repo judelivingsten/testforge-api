@@ -526,6 +526,117 @@
     .dot-green  { background: #4ade80; }
     .dot-red    { background: #f87171; }
     .dot-orange { background: #fbbf24; }
+
+    /* ── Jira section ── */
+    .jira-section {
+      border: 1.5px solid #b3d4ff;
+      border-radius: var(--radius-lg);
+      background: #f0f7ff;
+      padding: 1.1rem 1.25rem 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .jira-section-header {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      margin-bottom: .85rem;
+    }
+
+    .jira-label {
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      background: #0052CC;
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      padding: .2rem .55rem;
+      border-radius: 5px;
+      line-height: 1.4;
+    }
+
+    .jira-section-title {
+      font-size: .9rem;
+      font-weight: 600;
+      color: #0747a6;
+    }
+
+    .jira-input-row {
+      display: flex;
+      gap: .6rem;
+      align-items: stretch;
+    }
+
+    .jira-input-row input[type="text"] {
+      flex: 1;
+      min-width: 0;
+      background: #fff;
+    }
+
+    .btn-jira {
+      background: #0052CC;
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(0,82,204,.25);
+      white-space: nowrap;
+      flex-shrink: 0;
+      padding: .65rem 1.1rem;
+    }
+
+    .btn-jira:hover:not(:disabled) {
+      background: #0747a6;
+      box-shadow: 0 3px 10px rgba(0,82,204,.35);
+    }
+
+    .btn-jira:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-jira .btn-spin {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255,255,255,.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      flex-shrink: 0;
+    }
+
+    .jira-helper {
+      font-size: .78rem;
+      color: var(--gray-500);
+      margin-top: .5rem;
+    }
+
+    .jira-alert {
+      display: none;
+      align-items: center;
+      gap: .5rem;
+      border-radius: 7px;
+      padding: .55rem .9rem;
+      font-size: .83rem;
+      font-weight: 500;
+      margin-top: .75rem;
+    }
+
+    .jira-alert.visible { display: flex; }
+
+    .jira-alert-success {
+      background: var(--green-bg);
+      color: var(--green-text);
+      border: 1px solid #86efac;
+    }
+
+    .jira-alert-error {
+      background: var(--red-bg);
+      color: var(--red-text);
+      border: 1px solid #fca5a5;
+    }
   </style>
 </head>
 <body>
@@ -578,6 +689,42 @@
 
     <!-- Text Panel -->
     <div class="tab-panel active" id="panel-text">
+
+      <!-- Jira pull section -->
+      <div class="jira-section">
+        <div class="jira-section-header">
+          <span class="jira-label">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M11.571 11.429 6.343 6.2A.857.857 0 0 1 7.55 4.993l4.02 4.02 4.021-4.02a.857.857 0 1 1 1.212 1.212l-5.232 5.224ZM11.571 12.571 6.343 17.8A.857.857 0 0 0 7.55 19.007l4.02-4.02 4.021 4.02a.857.857 0 1 0 1.212-1.212l-5.232-5.224Z"/>
+            </svg>
+            Jira
+          </span>
+          <span class="jira-section-title">Pull From Jira</span>
+        </div>
+        <div class="jira-input-row">
+          <input type="text" id="jiraTicketId" placeholder="e.g. SCRUM-1" autocomplete="off" />
+          <button class="btn btn-jira" id="fetchJiraBtn" onclick="fetchFromJira()">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+            </svg>
+            Fetch from Jira
+          </button>
+        </div>
+        <p class="jira-helper">Enter your Jira ticket ID to auto-fill the form</p>
+        <div class="jira-alert jira-alert-success" id="jiraSuccess" role="status">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.3" style="flex-shrink:0">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+          <span id="jiraSuccessMsg"></span>
+        </div>
+        <div class="jira-alert jira-alert-error" id="jiraError" role="alert">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.3" style="flex-shrink:0">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span id="jiraErrorMsg"></span>
+        </div>
+      </div>
+
       <div class="form-grid">
         <div class="field">
           <label class="field-label" for="userStory">User Story</label>
@@ -897,6 +1044,59 @@
       btn.disabled = false;
       btn.innerHTML = orig;
     }
+  }
+
+  /* ─── Jira fetch ─── */
+  async function fetchFromJira() {
+    const ticketId = document.getElementById('jiraTicketId').value.trim();
+    if (!ticketId) return;
+
+    const btn = document.getElementById('fetchJiraBtn');
+    const origHTML = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="btn-spin"></span> Fetching…';
+
+    document.getElementById('jiraSuccess').classList.remove('visible');
+    document.getElementById('jiraError').classList.remove('visible');
+
+    try {
+      const res = await fetch(`/api/v1/jira/${encodeURIComponent(ticketId)}`, {
+        headers: { 'x-api-key': getApiKey() }
+      });
+
+      const data = await res.json();
+
+      if (res.status === 404) {
+        showJiraError('Ticket not found. Please check the ticket ID.');
+        return;
+      }
+
+      if (!res.ok) throw new Error(data.error || `Server error (${res.status})`);
+
+      document.getElementById('userStory').value = data.userStory || '';
+      document.getElementById('acceptanceCriteria').value = data.acceptanceCriteria || '';
+
+      switchTab('text');
+      showJiraSuccess(`Ticket ${ticketId} loaded successfully!`);
+
+    } catch (err) {
+      showJiraError(err.message || 'Failed to fetch ticket. Please try again.');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = origHTML;
+    }
+  }
+
+  function showJiraSuccess(msg) {
+    document.getElementById('jiraSuccessMsg').textContent = msg;
+    document.getElementById('jiraSuccess').classList.add('visible');
+    document.getElementById('jiraError').classList.remove('visible');
+  }
+
+  function showJiraError(msg) {
+    document.getElementById('jiraErrorMsg').textContent = msg;
+    document.getElementById('jiraError').classList.add('visible');
+    document.getElementById('jiraSuccess').classList.remove('visible');
   }
 
   /* ─── Escape HTML ─── */

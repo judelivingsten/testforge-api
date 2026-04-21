@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const generateRouter = require('./routes/generate');
 const exportRouter = require('./routes/export');
+const jiraRouter = require('./routes/jira');
 const { apiKeyAuth, rateLimiter } = require('./middleware/auth');
 
 const app = express();
@@ -22,6 +23,7 @@ app.use('/api', apiKeyAuth);
 
 app.use('/api/v1/generate', generateRouter);
 app.use('/api/v1/export', exportRouter);
+app.use('/api/v1/jira', jiraRouter);
 
 app.listen(PORT, () => {
   console.log(`TestForge API listening on port ${PORT}`);
