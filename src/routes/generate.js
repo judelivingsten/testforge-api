@@ -3,6 +3,7 @@ const multer = require('multer');
 const { generateTestCases } = require('../prompts/testCaseGenerator');
 const { extractText } = require('../parsers/fileParser');
 const { fetchJiraTicket } = require('../parsers/jiraParser');
+const { saveTestSuite } = require('../database/db');
 
 const router = express.Router();
 
@@ -21,6 +22,7 @@ router.post('/', async (req, res) => {
 
   try {
     const result = await generateTestCases(userStory, acceptanceCriteria);
+    saveTestSuite('text', 'manual', userStory, result.testCases);
     res.json(result);
   } catch (err) {
     console.error('Generation failed:', err.message);
@@ -52,6 +54,7 @@ router.post('/file', upload.single('document'), async (req, res) => {
 
   try {
     const result = await generateTestCases(text, acceptanceCriteria);
+    saveTestSuite('file', req.file.originalname, text, result.testCases);
     res.json(result);
   } catch (err) {
     console.error('Generation failed:', err.message);
@@ -75,6 +78,7 @@ router.get('/jira/:ticketId', async (req, res) => {
 
   try {
     const result = await generateTestCases(userStory, acceptanceCriteria);
+    saveTestSuite('jira', ticketId, userStory, result.testCases);
     res.json(result);
   } catch (err) {
     console.error('Generation failed:', err.message);
