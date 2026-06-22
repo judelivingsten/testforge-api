@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.get('/health', (req, res) => {
-  res.json({ message: 'TestForge API is running' });
+  res.json({ status: 'healthy', version: '1.0.0' });
 });
 
 app.use('/api', rateLimiter);
