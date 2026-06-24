@@ -1,4 +1,4 @@
-const rateLimit = require('express-rate-limit');
+const { rateLimit, ipKeyGenerator } = require('express-rate-limit');
 
 function apiKeyAuth(req, res, next) {
   const key = req.headers['x-api-key'];
@@ -17,7 +17,7 @@ function apiKeyAuth(req, res, next) {
 const rateLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
   max: 100,
-  keyGenerator: (req) => req.headers['x-api-key'] || req.ip,
+  keyGenerator: (req) => req.headers['x-api-key'] || ipKeyGenerator(req.ip),
   handler: (_req, res) => {
     res.status(429).json({ error: 'Rate limit exceeded. Maximum 100 requests per hour.' });
   },
