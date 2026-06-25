@@ -37,7 +37,7 @@ async function generateTestCases(userStory, acceptanceCriteria) {
   const userMessage = `User Story:\n${userStory.trim()}\n\nAcceptance Criteria:\n${acceptanceCriteria.trim()}`;
 
   const response = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
+    model: 'claude-sonnet-4-6',
     max_tokens: 4096,
     system: SYSTEM_PROMPT,
     messages: [{ role: 'user', content: userMessage }],
