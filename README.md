@@ -228,6 +228,10 @@ testforge-api/
 
 ---
 
+## 🏗️ System Architecture
+
+![TestForge System Architecture](docs/architecture.png)
+
 ## 🗺️ Roadmap
 
 - [x] Core API with Claude AI integration
