@@ -240,8 +240,8 @@ testforge-api/
 - [x] Web UI
 - [x] Jira integration
 - [x] Jira ticket input in Web UI
-- [ ] Database storage
-- [ ] Cloud deployment
+- [x] Database storage
+- [x] Cloud deployment
 - [ ] Webhook support
 
 ---
