@@ -242,7 +242,7 @@ testforge-api/
 - [x] Jira ticket input in Web UI
 - [x] Database storage
 - [x] Cloud deployment
-- [ ] Webhook support
+- [x] Webhook support - auto-trigger on Jira ticket creation
 
 ---
 
