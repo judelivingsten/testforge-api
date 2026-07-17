@@ -30,6 +30,11 @@ Instead of spending 2-3 hours manually writing test cases, TestForge does it in 
 | 🔐 API key security | Protected endpoints with rate limiting |
 | ✅ Input validation | Clean error handling on all endpoints |
 
+
+## System Architecture
+
+![TestForge Architecture](docs/architecture.png)
+
 ---
 
 ## 🏗️ Tech Stack
